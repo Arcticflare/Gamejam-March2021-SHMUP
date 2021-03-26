@@ -15,10 +15,10 @@ public class PlayerWeapons : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
-        {
-            Shoot();
-        }
+    //     if (Input.GetButtonDown("Fire1"))
+    //     {
+    //         Shoot();
+    //     }
     }
 
     void Shoot()
