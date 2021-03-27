@@ -6,11 +6,14 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     Rigidbody2D rb;
-    
     float left; 
     float right; 
     float down; 
     float up; 
+    public InputAction input;
+    bool dashing;
+    Vector2 dashStart;
+    Vector2 dashDirection;
 
     [SerializeField]
     float dashSpeed = 100;
@@ -21,10 +24,16 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     float dashDistance = 3;
     
-    bool dashing;
-    Vector2 dashStart;
-    Vector2 dashDirection;
 
+    void OnEnable()
+    {
+        input.Enable();
+    }
+
+    void OnDisable() 
+    {
+        input.Disable();    
+    }
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -37,6 +46,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        // No longer needs to be normalized, Input does this from gui.
+        // Causes error when anything other than wasd (bound) are pressed,
+        // Consider instead finding inputType.
+        Vector2 inputVector = input.ReadValue<Vector2>();
+
         // Make sure player can't go outside screen
         if (transform.position.x > right) {
             transform.position = new Vector3(right, transform.position.y, transform.position.z);
@@ -51,44 +65,21 @@ public class PlayerMovement : MonoBehaviour
             transform.position = new Vector3(transform.position.x, down, transform.position.z);
         }
 
-        // var x = Input.GetAxisRaw("Horizontal");
-        // var y = Input.GetAxisRaw("Vertical");
-
-        // if (Input.GetKeyDown(KeyCode.Space) && (x >= 0 || y >= 0)) {
-        //     if (!dashing) {
-        //         dashing = true;
-        //         dashStart = (Vector2)transform.position;
-        //         dashDirection.x = x;
-        //         dashDirection.y = y;
-        //     }
-        // }
-
-        // Move(x, y);
-        
-        // if (dashing) {
-        //     Dash(x, y);
-        // }
+        Move(inputVector);
     }
 
-    void Move(float x, float y)
+    void Move(Vector2 vector)
     {
         if (dashing) {
             return;
         }
-        // Makes a vector length of 1.
-        // If moving diagonally and input is 1, 1, then vector length will be 1.4142135623730951
-        // Which means we'll be moving 41% faster than usual if multiplied with speed
-        // So, we use the normalized vector which will make sure the vector length is always 1
-        var norm = new Vector2(x, y).normalized;
 
-        rb.velocity = norm * speed;
+        rb.velocity = vector * speed;
     }
 
-    void Dash(float x, float y)
+    void Dash(Vector2 vector)
     {
-        var norm = new Vector2(x, y).normalized;
-
-        rb.velocity = norm * dashSpeed;
+        rb.velocity = vector * dashSpeed;
         
         if (Vector3.Distance(transform.position, dashStart) >= dashDistance) {
             dashing = false;
