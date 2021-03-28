@@ -16,11 +16,9 @@ public class PlayerMovement : MonoBehaviour
     Vector2 dashDirection;
 
     [SerializeField]
-    float dashSpeed = 100;
-    
-    [SerializeField]
     float speed = 10;
-
+    [SerializeField]
+    float dashSpeed = 100;
     [SerializeField]
     float dashDistance = 3;
     
