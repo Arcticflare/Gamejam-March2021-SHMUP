@@ -84,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
     
-    public void MoveInput(InputAction.CallbackContext context) {
+    /* public void MoveInput(InputAction.CallbackContext context) {
         Debug.Log("Move! " + context);
-    }
+    } */
 }
