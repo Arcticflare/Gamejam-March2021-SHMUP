@@ -13,8 +13,10 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField]
     float moveTime = 2;
     [SerializeField]
-    float speed = 5;
+    float speed = 5.0f;
     float elapsedTime = 0.0f;
+    Vector2 direction;
+    bool moving;
 
     void Start()
     {
@@ -33,22 +35,14 @@ public class EnemyMovement : MonoBehaviour
         if (elapsedTime > moveTime)
         {
             elapsedTime = 0;
-            MoveEnemy();
+            direction = GetDirection();
+            rb.velocity = direction;
         }
-
-
     }
 
-    // Managed to get this working using the direction var, but had no bounds set.
-    // Consider just setting bounds as player has.
-    void MoveEnemy()
+    Vector2 GetDirection()
     {
-        //var direction = new Vector2(Random.Range(-5, 5), Random.Range(-5, 5));
-        var randomPos = new Vector2(Random.Range(left, right), (Random.Range(down, up)));
-
-        // Using deltaTime causes this to stop working? 
-        float step =  speed * Time.deltaTime;
-        transform.position = Vector2.MoveTowards(transform.position, randomPos, speed);
+        return new Vector2(Random.Range(-5, 5), (Random.Range(-5, 5)));
     }
 
 
