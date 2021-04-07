@@ -9,7 +9,7 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField]
     float moveTime = 2;
     [SerializeField]
-    float speed = 5.0f;
+    //float speed = 5.0f;
     float elapsedTime = 0.0f;
     Vector2 direction;
 
