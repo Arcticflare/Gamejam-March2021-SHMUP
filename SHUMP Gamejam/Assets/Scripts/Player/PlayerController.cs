@@ -1,33 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    PlayerInput playerInput;
-    Rigidbody2D rb;
-    [SerializeField]float speed = 10;
-    // Start is called before the first frame update
-    void Awake()
+    [SerializeField] Rigidbody2D rb;
+    [SerializeField] float speed = 10;
+    float inputValueX;
+    float inputValueY;
+
+    void Update()
     {
-        playerInput = new PlayerInput();
-        rb = GetComponent<Rigidbody2D>();
+        rb.velocity = new Vector2(inputValueX * speed, inputValueY * speed);
     }
 
-    private void OnEnable()
+    public void Move(InputAction.CallbackContext context)
     {
-        playerInput.Enable();
+        inputValueX = context.ReadValue<Vector2>().x;
+        inputValueY = context.ReadValue<Vector2>().y;
     }
 
-    private void OnDisable()
+    public void Dash(InputAction.CallbackContext context)
     {
-        playerInput.Disable();
-    }
-
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        Vector2 moveVector = playerInput.Player.Movement.ReadValue<Vector2>();
-        rb.velocity = moveVector * speed;
+        Debug.Log("Dashing!");
     }
 }
