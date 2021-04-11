@@ -269,9 +269,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7d0997fa5fac8c4b935da64cf0b50c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 694218277}
   speed: 10
-  dashDistance: 3
+  dashForce: 50
 --- !u!212 &694218279
 SpriteRenderer:
   m_ObjectHideFlags: 0
