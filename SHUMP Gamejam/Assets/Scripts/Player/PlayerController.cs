@@ -17,8 +17,6 @@ public class PlayerController : MonoBehaviour
     float dashTimer;
     Vector2 dashDirection;
 
-
-
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -52,8 +50,6 @@ public class PlayerController : MonoBehaviour
     {
         dashing = context.performed;
         dashTimer = dashStartTimer;
-
-        Debug.Log("Dashing");
     }
 
     public void Fire(InputAction.CallbackContext context)

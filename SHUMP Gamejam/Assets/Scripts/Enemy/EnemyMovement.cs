@@ -16,7 +16,6 @@ public class EnemyMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-
     }
 
     void Update()
@@ -26,15 +25,7 @@ public class EnemyMovement : MonoBehaviour
         if (elapsedTime > moveTime)
         {
             elapsedTime = 0;
-            direction = GetDirection();
-            rb.velocity = direction;
+            rb.velocity = new Vector2(Random.Range(-5, 5), (Random.Range(-5, 5)));
         }
     }
-
-    Vector2 GetDirection()
-    {
-        return new Vector2(Random.Range(-5, 5), (Random.Range(-5, 5)));
-    }
-
-
 }

@@ -4,22 +4,17 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    float left; 
-    float right; 
-    float down; 
-    float up; 
-    [SerializeField]
-    GameObject EnemySpawn;
-    [SerializeField]
-    float spawnTimer = 5;
+    [SerializeField] GameObject enemySpawn;
+    [SerializeField] float spawnTimer = 5;
     float elapsedTime = 0.0f;
+
+    CameraBounds cb;
+    Vector2 spawnArea;
     
     void Start()
     {
-        right = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0, 0)).x;
-        left = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0)).x;
-        up = Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height, 0)).y;
-        down = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0)).y;
+        cb = FindObjectOfType<CameraBounds>();
+        spawnArea = cb.screenBounds;
     }
 
     void Update()
@@ -35,8 +30,8 @@ public class Spawner : MonoBehaviour
 
     void SpawnEnemy()
     {
-        var pos = new Vector2(Random.Range(left, right), (Random.Range(down, up)));
-        Instantiate(EnemySpawn, pos, Quaternion.identity);
+        var position = new Vector2(Random.Range(-spawnArea.x, spawnArea.x), (Random.Range(-spawnArea.y, spawnArea.y)));
+        Instantiate(enemySpawn, position, Quaternion.identity);
         
     }
 }
