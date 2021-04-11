@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rb;
 
     Vector2 inputDirection;
+    Vector2 currentVelocity;
     [SerializeField] float speed = 10;
 
     [SerializeField] float dashForce = 20;
@@ -25,12 +26,13 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        rb.velocity = new Vector2(inputDirection.x, inputDirection.y) * speed;
+        currentVelocity = new Vector2(inputDirection.x, inputDirection.y);
+
+        rb.velocity = currentVelocity * speed;
 
         if (dashing)
         {
-            //what info is in transform.right - convert for x and y consecutively.
-            rb.velocity = transform.right * inputDirection * dashForce;
+            rb.velocity = currentVelocity * dashForce;
 
             dashTimer -= Time.deltaTime;
 
